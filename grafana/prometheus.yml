@@ -1,0 +1,24 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090", "host.docker.internal:9090"]
+
+  ### FRONTEND ###
+  - job_name: "frontend"
+    static_configs:
+      - targets: ["host.docker.internal:3000"]
+
+  ### BACKEND ###
+  - job_name: "backend"
+    static_configs:
+      - targets: ["host.docker.internal:3000"]
+
+
+##### COMMANDS TO RUN #####
+### Note: Run these from the ./tdp-tender-discovery-platform folder (the root) and in Powershell
+
+# docker pull prom/prometheus
+# docker run --name=prometheus -p 9090:9090 -v ${PWD}/grafana/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus

@@ -6,7 +6,8 @@ const white_list = [
   '/api/v1/auth/login',
   '/api/v1/auth/forgotpassword',
   '/api/v1/auth/resetpassword',
-  '/'
+  '/',
+  '/metrics'
 ];
 
 declare module 'express' {

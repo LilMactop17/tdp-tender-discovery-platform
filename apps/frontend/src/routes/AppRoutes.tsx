@@ -14,6 +14,7 @@ import TenderDetails from "../features/tdp-tm/components/SubmittedTenderDetails"
 import TenderDashboard from "../features/tdp-tm/pages/TenderDashboard";
 import BidStatusUpdates from '../features/tdp-tm/pages/BidStatusUpdates';
 import MyBids from "../features/tdp-tm/pages/MyBids";
+import Metrics from "../features/tdp-bm/pages/Metrics";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -44,6 +45,8 @@ const AppRoutes = () => {
       <Route path="ca/camain" element={<CaMain />} />
       <Route path="bm/bmmain" element={<BmMain />} />
       <Route path="kb/kbmain" element={<KbMain />} />
+
+      <Route path="metrics" element={<Metrics/>} />
     </Route>
   </Routes>
   );

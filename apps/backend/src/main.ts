@@ -15,6 +15,7 @@ import { logger } from './middleware/logger.middleware';
 import { delay } from './middleware/delay.middleware';
 import { auth } from './middleware/auth.middleware';
 import dotenv from 'dotenv';
+import client from 'prom-client';
 import {initSupaBaseSubscription} from './utils/supabase_subscription';
 import { createSupabaseClient } from './utils/createSupabaseClient';
 dotenv.config();
@@ -421,6 +422,31 @@ app.get('/getOpenTenderNoticesFromDB', async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 })
+
+
+const register = new client.Registry();
+client.collectDefaultMetrics({ register });
+
+const httpRequestCounter = new client.Counter({
+  name: 'http_requests_total',
+  help: 'Total HTTP requests received',
+  labelNames: ['method', 'path', 'status_code'],
+});
+
+register.registerMetric(httpRequestCounter);
+
+
+app.get('/metrics', async (req, res) => {
+  try {
+    res.set('Content-Type', register.contentType);
+    res.send(await register.metrics());
+  }
+  
+  catch (error) {
+    console.error('Metrics error:', error);
+    res.status(500).send('Unable to fetch metrics');
+  }
+});
 
 
 
